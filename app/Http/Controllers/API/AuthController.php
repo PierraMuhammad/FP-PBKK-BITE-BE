@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use illuminate\Support\Fascades\Hash;
 use Validator;
+use Auth;
 
 class AuthController extends Controller
 {
@@ -16,8 +17,7 @@ class AuthController extends Controller
         $validateData = Validator::make($request->all(),[
             'name' => 'required|max:30',
             'email'=> 'email|required|unique:users',
-            'password' => 'required',
-            'confirm_password' => 'required|same:password'
+            'password' => 'required'
         ]);
 
         if($validateData->fails()){
@@ -40,36 +40,25 @@ class AuthController extends Controller
             'massage' => "Registrasi Berhasil",
             "data" => $success
         ]);
-
-
-
-        // $validateData = $request->validate([
-        //     'name' => 'required|max:30',
-        //     'email'=> 'email|required|unique:users',
-        //     'password' => 'required|confirmed'
-        // ]);
-
-        // $validateData['password'] = Hash::make($request->password);
-
-        // $user = User::create($validateData);
-
-        // $accessToken = $user->createToken('authToken')->accessToken;
-
-        // return response(['user' => $user, 'access_token' => $accessToken], 201);
     }
 
     public function Login(Request $request){
-        $validateData = $request->validate([
-            'email'=> 'email|required',
-            'password' => 'required|confirmed'
-        ]);
+        if(Auth::attempt(['email' => $request->email, 'password' => $request->password])){
+            $auth = Auth::user();
+            $success['token'] = $auth->createToken('auth_token')->plainTextToken;
+            $success['name'] = $auth->name;
 
-        if(!auth()->attempt($validate)){
-            return response(['message' => "User tidak terdaftar"], 400);
+            return response()->json([
+                'success' => True,
+                'massage' => "Login Berhasil",
+                "data" => $success
+            ]);
+        } else {
+            return response()->json([
+                'success' => False,
+                'massage' => "Cek email dan password lagi",
+                "data" => $success
+            ]);
         }
-
-        $accessToken = auth()->user()->ccreateToken('authToken')->accessToken;
-
-        return response(['user' => $user, 'access_token' => $accessToken], 201);
     }
 }
