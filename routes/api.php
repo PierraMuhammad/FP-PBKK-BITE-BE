@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
+use App\Http\Controllers\FoodController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,3 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('register', [AuthController::class, 'Register']);
 
 Route::post('login', [AuthController::class, 'Login']);
+
+Route::post('logout', [AuthController::class, 'Logout']);
+
+Route::get('food', [FoodController::class, 'index']);
