@@ -37,42 +37,14 @@ class OrderController extends Controller
         return false;
     }
 
-    // public function createOrder(Request $request){
-    //     // $request = $request->all();
-    //     dd($request);
-    //     /*
-    //         perumpamaan data yang diterima:
-    //         {
-    //             'id' : 1,
-    //             'user_id' : 1,
-    //             'status' : "belum dibayar",
-    //             'total' : 120000
-    //             'product' : [
-    //                 {'id' : 1, 'quantity': 1, 'total': 10000},
-    //                 {'id' : 2, 'quantity': 1, 'total': 12000},
-    //             ]
-    //         }
-    //     */
-
-    //     $validateData = Validator::make($request->all(),[
-    //         'user_id' => 'required',
-    //         'status'=> 'required'
-    //     ]);
-
-    //     $total = 0;
-    //     foreach($request["product"] as $product){
-    //         $food = Food::where('id', product['id']);
-    //         $total += $food['price'];
-    //     }
-    //     dd($total);
-    // }
 
     public function updateOrder(Request $request){
         $request = $request->all();
         $order = Invoice::where('id', $request['id'])->update(['status' => "Sudah Selesai"]);
         if($order){
             return response()->json([
-                "status" => "sudah berubah"
+                "status" => "sudah berubah",
+                "code" => 201
             ]);
         }
         return false;
