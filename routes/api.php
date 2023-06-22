@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\AuthController;
 use App\Http\Controllers\FoodController;
+use App\Http\Controllers\OrderController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,4 +27,11 @@ Route::post('login', [AuthController::class, 'Login']);
 
 Route::post('logout', [AuthController::class, 'Logout']);
 
-Route::get('food', [FoodController::class, 'index']);
+Route::apiResource('food', FoodController::class);
+
+Route::post('order', [OrderController::class, 'createOrder']);
+
+Route::post('changeStatus', [OrderController::class, 'updateOrder']);
+
+
+

@@ -17,7 +17,7 @@ class AuthController extends Controller
         $validateData = Validator::make($request->all(),[
             'name' => 'required|max:30',
             'email'=> 'email|required|unique:users',
-            'password' => 'required'
+            'password' => 'required',
         ]);
 
         if($validateData->fails()){
@@ -57,16 +57,7 @@ class AuthController extends Controller
             return response()->json([
                 'success' => False,
                 'massage' => "Cek email dan password lagi",
-                "data" => $success
             ]);
         }
-    }
-
-    public function Logout(Request $request){
-        $request->user()->currentToken->delete();
-        return response()->json([
-            'success' => True,
-            'massage' => "Log Out Berhasil"
-        ]);
     }
 }

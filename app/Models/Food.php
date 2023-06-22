@@ -15,4 +15,12 @@ class Food extends Model
         "description",
         "img"
     ];
+
+    public function invoice(){
+        return $this->hasMany(Invoice::class);
+    }
+
+    public function getFood(){
+        $food = Food::where('id', $id)->get();
+    }
 }

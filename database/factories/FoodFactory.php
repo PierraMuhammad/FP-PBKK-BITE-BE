@@ -18,9 +18,11 @@ class FoodFactory extends Factory
     public function definition(Request $request)
     {
         return [
-            
-
-
+            'id' => $this->id,
+            'name' => $this->name,
+            'price' => $this->price,
+            'description' => $this->description,
+            'img' => $this->img,
         ];
     }
 }
