@@ -30,11 +30,15 @@ class OrderController extends Controller
         $Order = Invoice::create($input);
         if($Order){
             return response()->json([
+                'success' => false,
                 'order_id' => $Order->id,
                 'status' => $Order->status
             ]);
         }
-        return false;
+        return response()->json([
+            'success' => false,
+            'status' => 400
+        ]);
     }
 
 

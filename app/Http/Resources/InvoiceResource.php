@@ -20,6 +20,7 @@ class InvoiceResource extends JsonResource
             'product_id' => $this->product,
             'quantity' => $this->quantity,
             'total' => $this->total,
+            'status' => $this->status
         ];
     }
 }
